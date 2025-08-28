@@ -1,0 +1,211 @@
+<%- include('partials/header') %>
+
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                Premium Motorbike Gear
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-200">
+                Ride with confidence. Gear up with Zearsports.
+            </p>
+            <div class="space-x-4">
+                <a href="/products" class="bg-primary hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors inline-block">
+                    Shop Now
+                </a>
+                <a href="/about" class="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-bold py-3 px-8 rounded-lg transition-colors inline-block">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Categories -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Shop by Category</h2>
+            <p class="text-lg text-gray-600">Discover our premium collection of motorbike gear</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Suits Category -->
+            <div class="relative group overflow-hidden rounded-lg shadow-lg card-hover">
+                <div class="aspect-w-16 aspect-h-12">
+                    <img src="/images/jxblbfm1u2Ua.jpg" alt="Motorbike Suits" class="w-full h-64 object-cover">
+                </div>
+                <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white">
+                        <h3 class="text-2xl font-bold mb-2">Motorbike Suits</h3>
+                        <p class="mb-4">Professional racing suits for ultimate protection</p>
+                        <a href="/products/category/suits" class="bg-primary hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors">
+                            Shop Suits
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gloves Category -->
+            <div class="relative group overflow-hidden rounded-lg shadow-lg card-hover">
+                <div class="aspect-w-16 aspect-h-12">
+                    <img src="/images/3pnxnrYrPYDB.jpg" alt="Motorbike Gloves" class="w-full h-64 object-cover">
+                </div>
+                <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white">
+                        <h3 class="text-2xl font-bold mb-2">Motorbike Gloves</h3>
+                        <p class="mb-4">Enhanced grip and protection for your hands</p>
+                        <a href="/products/category/gloves" class="bg-primary hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors">
+                            Shop Gloves
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Boots Category -->
+            <div class="relative group overflow-hidden rounded-lg shadow-lg card-hover">
+                <div class="aspect-w-16 aspect-h-12">
+                    <img src="/images/0RWM3GZmCqcD.jpg" alt="Motorbike Boots" class="w-full h-64 object-cover">
+                </div>
+                <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white">
+                        <h3 class="text-2xl font-bold mb-2">Motorbike Boots</h3>
+                        <p class="mb-4">Durable boots for comfort and safety</p>
+                        <a href="/products/category/boots" class="bg-primary hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors">
+                            Shop Boots
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<% if (featuredProducts && featuredProducts.length > 0) { %>
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
+            <p class="text-lg text-gray-600">Hand-picked items from our premium collection</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% featuredProducts.forEach(product => { %>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                <div class="aspect-w-16 aspect-h-12">
+                    <img src="/images/<%= product.image %>" alt="<%= product.name %>" class="w-full h-48 object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2"><%= product.name %></h3>
+                    <p class="text-gray-600 text-sm mb-4"><%= product.description.substring(0, 100) %>...</p>
+                    <div class="flex items-center justify-between">
+                        <!-- <span class="text-2xl font-bold text-primary">$<%= product.price.toFixed(2) %></span> -->
+                        <a href="/products/<%= product._id %>" class="bg-primary hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="/products" class="bg-secondary hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+                View All Products
+            </a>
+        </div>
+    </div>
+</section>
+<% } %>
+
+<!-- New Products -->
+<% if (newProducts && newProducts.length > 0) { %>
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">New Arrivals</h2>
+            <p class="text-lg text-gray-600">Latest additions to our gear collection</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <% newProducts.forEach(product => { %>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                <div class="aspect-w-16 aspect-h-12">
+                    <img src="/images/<%= product.image %>" alt="<%= product.name %>" class="w-full h-40 object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="text-md font-semibold text-gray-900 mb-2"><%= product.name %></h3>
+                    <div class="flex items-center justify-between">
+                        <!-- <span class="text-lg font-bold text-primary">$<%= product.price.toFixed(2) %></span> -->
+                        <a href="/products/<%= product._id %>" class="text-primary hover:text-red-700 font-medium">
+                            View <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<% } %>
+
+<!-- Features Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Zearsports?</h2>
+            <p class="text-lg text-gray-600">We're committed to providing the best motorbike gear experience</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Premium Quality</h3>
+                <p class="text-gray-600">All our products meet the highest safety and quality standards for professional riders.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shipping-fast text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Fast Shipping</h3>
+                <p class="text-gray-600">Get your gear delivered quickly and safely.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-headset text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Expert Support</h3>
+                <p class="text-gray-600">Our team of riding experts is here to help you choose the perfect gear for your needs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-16 bg-secondary text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Stay Updated</h2>
+            <p class="text-lg text-gray-300 mb-8">Subscribe to our newsletter for exclusive deals and new product announcements</p>
+            <form class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Enter your email" 
+                       class="flex-1 px-4 py-3 text-gray-900 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                <button type="submit" class="bg-primary hover:bg-red-700 text-white font-bold px-6 py-3 rounded-r-lg transition-colors">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
+

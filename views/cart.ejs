@@ -1,0 +1,189 @@
+<%- include('partials/header') %>
+
+<div class="bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Shopping Cart</h1>
+            <p class="text-lg text-gray-600">Review your items before checkout</p>
+        </div>
+        
+        <% if (cart && cart.length > 0) { %>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Cart Items -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-900">Cart Items (<%= cart.length %>)</h2>
+                    </div>
+                    
+                    <div class="divide-y divide-gray-200">
+                        <% cart.forEach((item, index) => { %>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-4">
+                                <!-- Product Image -->
+                                <div class="flex-shrink-0">
+                                    <img src="/images/<%= item.image %>" alt="<%= item.name %>" class="w-20 h-20 object-cover rounded-lg">
+                                </div>
+                                
+                                <!-- Product Details -->
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-lg font-semibold text-gray-900"><%= item.name %></h3>
+                                    <div class="mt-1 text-sm text-gray-600">
+                                        <% if (item.size) { %>
+                                        <span class="mr-4">Size: <%= item.size %></span>
+                                        <% } %>
+                                        <% if (item.color) { %>
+                                        <span>Color: <%= item.color %></span>
+                                        <% } %>
+                                    </div>
+                                    <!-- <p class="mt-1 text-lg font-bold text-primary">$<%= item.price.toFixed(2) %></p> -->
+                                </div>
+                                
+                                <!-- Quantity Controls -->
+                                <div class="flex items-center space-x-2">
+                                    <form action="/cart/update" method="POST" class="flex items-center space-x-2">
+                                        <input type="hidden" name="productId" value="<%= item.productId %>">
+                                        <input type="hidden" name="size" value="<%= item.size %>">
+                                        <input type="hidden" name="color" value="<%= item.color %>">
+                                        <button type="button" onclick="decreaseQuantity(this)" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center">
+                                            <i class="fas fa-minus text-sm"></i>
+                                        </button>
+                                        <input type="number" name="quantity" value="<%= item.quantity %>" min="1" max="99" 
+                                               class="w-16 text-center border border-gray-300 rounded-md py-1 focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <button type="button" onclick="increaseQuantity(this)" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center">
+                                            <i class="fas fa-plus text-sm"></i>
+                                        </button>
+                                        <button type="submit" class="ml-2 text-primary hover:text-red-700 text-sm font-medium">
+                                            Update
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                                <!-- Remove Button -->
+                                <div class="flex-shrink-0">
+                                    <a href="/cart/remove?productId=<%= item.productId %>&size=<%= item.size %>&color=<%= item.color %>" 
+                                       class="text-red-600 hover:text-red-800 transition-colors"
+                                       onclick="return confirm('Are you sure you want to remove this item?')">
+                                        <i class="fas fa-trash text-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Item Total -->
+                            <!-- <div class="mt-4 text-right">
+                                <span class="text-lg font-semibold text-gray-900">
+                                    Item Total: $<%= (item.price * item.quantity).toFixed(2) %>
+                                </span>
+                            </div> -->
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+                
+                <!-- Continue Shopping -->
+                <div class="mt-6">
+                    <a href="/products" class="inline-flex items-center text-primary hover:text-red-700 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
+                    
+                    <div class="space-y-3">
+                        <!-- <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Subtotal</span>
+                            <span class="font-medium">$<%= subtotal %></span>
+                        </div>
+                        
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Shipping</span>
+                            <span class="font-medium">
+                                <% if (parseFloat(shipping) === 0) { %>
+                                    <span class="text-green-600">FREE</span>
+                                <% } else { %>
+                                    $<%= shipping %>
+                                <% } %>
+                            </span>
+                        </div> -->
+                        
+                        <!-- <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Tax</span>
+                            <span class="font-medium">$<%= tax %></span>
+                        </div> -->
+                        
+                        <!-- <div class="border-t border-gray-200 pt-3">
+                            <div class="flex justify-between text-lg font-semibold">
+                                <span>Total</span>
+                                <span class="text-primary">$<%= total %></span>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                    <div class="mt-6 space-y-3">
+                        <a href="/orders/checkout" class="w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-colors text-center block">
+                            Proceed to Checkout
+                        </a>
+                        
+                        <form action="/cart/clear" method="POST" class="w-full">
+                            <button type="submit" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors"
+                                    onclick="return confirm('Are you sure you want to clear your cart?')">
+                                Clear Cart
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Free Shipping Notice -->
+                    <% if (parseFloat(subtotal) < 100) { %>
+                    <div class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <p class="text-sm text-blue-800">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Add $<%= (100 - parseFloat(subtotal)).toFixed(2) %> more for FREE shipping!
+                        </p>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        
+        <% } else { %>
+        <!-- Empty Cart -->
+        <div class="text-center py-12">
+            <div class="bg-white rounded-lg shadow-md p-12">
+                <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-6"></i>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Your cart is empty</h3>
+                <p class="text-gray-600 mb-8">Looks like you haven't added any items to your cart yet.</p>
+                <a href="/products" class="bg-primary hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors inline-block">
+                    Start Shopping
+                </a>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    function increaseQuantity(button) {
+        const input = button.previousElementSibling;
+        const currentValue = parseInt(input.value);
+        if (currentValue < 99) {
+            input.value = currentValue + 1;
+        }
+    }
+    
+    function decreaseQuantity(button) {
+        const input = button.nextElementSibling;
+        const currentValue = parseInt(input.value);
+        if (currentValue > 1) {
+            input.value = currentValue - 1;
+        }
+    }
+</script>
+
+<%- include('partials/footer') %>
+

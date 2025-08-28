@@ -1,0 +1,29 @@
+{
+  "name": "zearsports-website",
+  "version": "1.0.0",
+  "description": "Zearsports - Premium Motorbike Gear E-commerce Website",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node seed-data.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["motorbike", "motorcycle", "gear", "ecommerce", "nodejs", "express", "ejs"],
+  "author": "Zearsports Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.2",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.5"
+  }
+}

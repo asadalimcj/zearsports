@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#dc2626',
+                        secondary: '#1f2937',
+                        accent: '#f59e0b'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="/" class="text-2xl font-bold text-primary">
+                        <i class="fas fa-motorcycle mr-2"></i>Zearsports
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <div class="relative group">
+                            <button class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                Products <i class="fas fa-chevron-down ml-1"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div class="py-1">
+                                    <a href="/products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All Products</a>
+                                    <a href="/products/category/suits" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Motorbike Suits</a>
+                                    <a href="/products/category/gloves" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Motorbike Gloves</a>
+                                    <a href="/products/category/boots" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Motorbike Boots</a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/about" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="/contact" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                
+                <!-- Right side icons -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="relative hidden sm:block">
+                        <form action="/search" method="GET" class="flex">
+                            <input type="text" name="q" placeholder="Search products..." 
+                                   class="w-64 px-4 py-2 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <button type="submit" class="px-4 py-2 bg-primary text-white rounded-r-md hover:bg-red-700 transition-colors">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Cart -->
+                    <a href="/cart" class="relative text-gray-700 hover:text-primary transition-colors">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <% if (cart && cart.length > 0) { %>
+                            <span class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                <%= cart.reduce((total, item) => total + item.quantity, 0) %>
+                            </span>
+                        <% } %>
+                    </a>
+                    
+                    <!-- User Account -->
+                    <div class="relative group">
+                        <button class="text-gray-700 hover:text-primary transition-colors">
+                            <i class="fas fa-user text-xl"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="py-1">
+                                <a href="/users/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Account</a>
+                                <a href="/users/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Login</a>
+                                <a href="/users/register" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50">
+                <a href="/" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="/products" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">All Products</a>
+                <a href="/products/category/suits" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Motorbike Suits</a>
+                <a href="/products/category/gloves" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Motorbike Gloves</a>
+                <a href="/products/category/boots" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Motorbike Boots</a>
+                <a href="/about" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="/contact" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <%- body %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-motorcycle mr-2"></i>Zearsports
+                    </h3>
+                    <p class="text-gray-300 mb-4">Your trusted partner for premium motorbike gear. Quality, safety, and style combined.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="/products" class="text-gray-300 hover:text-white transition-colors">Products</a></li>
+                        <li><a href="/about" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="/contact" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/products/category/suits" class="text-gray-300 hover:text-white transition-colors">Motorbike Suits</a></li>
+                        <li><a href="/products/category/gloves" class="text-gray-300 hover:text-white transition-colors">Motorbike Gloves</a></li>
+                        <li><a href="/products/category/boots" class="text-gray-300 hover:text-white transition-colors">Motorbike Boots</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-300">
+                        <p><i class="fas fa-map-marker-alt mr-2"></i>123 Motorcycle Street, Racing City, RC 12345</p>
+                        <p><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</p>
+                        <p><i class="fas fa-envelope mr-2"></i>info@zearsports.com</p>
+                        <p><i class="fas fa-clock mr-2"></i>Mon-Fri: 9AM-6PM</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-600 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2025 Zearsports. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cart count update function
+        function updateCartCount() {
+            fetch('/cart/count')
+                .then(response => response.json())
+                .then(data => {
+                    const cartBadge = document.querySelector('.fa-shopping-cart + span');
+                    if (data.count > 0) {
+                        if (cartBadge) {
+                            cartBadge.textContent = data.count;
+                        } else {
+                            const cartIcon = document.querySelector('.fa-shopping-cart');
+                            const badge = document.createElement('span');
+                            badge.className = 'absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center';
+                            badge.textContent = data.count;
+                            cartIcon.parentElement.appendChild(badge);
+                        }
+                    } else if (cartBadge) {
+                        cartBadge.remove();
+                    }
+                })
+                .catch(error => console.error('Error updating cart count:', error));
+        }
+
+        // Update cart count on page load
+        document.addEventListener('DOMContentLoaded', updateCartCount);
+    </script>
+</body>
+</html>
+

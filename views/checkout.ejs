@@ -1,0 +1,303 @@
+<%- include('partials/header') %>
+
+<div class="bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Checkout</h1>
+            <p class="text-lg text-gray-600">Complete your order</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Checkout Form -->
+            <div class="lg:col-span-2">
+                <form action="/orders/place" method="POST" class="space-y-8">
+                    <!-- Customer Information -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Customer Information</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                                <input type="text" name="firstName" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                                <input type="text" name="lastName" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                <input type="email" name="email" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                                <input type="tel" name="phone" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Address -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Shipping Address</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Street Address *</label>
+                                <input type="text" name="shippingStreet" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                                    <input type="text" name="shippingCity" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">State/Province *</label>
+                                    <input type="text" name="shippingState" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">ZIP/Postal Code *</label>
+                                    <input type="text" name="shippingZip" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Country *</label>
+                                    <select name="shippingCountry" required
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select Country</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="FR">France</option>
+                                        <option value="IT">Italy</option>
+                                        <option value="ES">Spain</option>
+                                        <option value="NL">Netherlands</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Billing Address -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-semibold text-gray-900">Billing Address</h2>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="sameAsShipping" class="mr-2">
+                                <span class="text-sm text-gray-600">Same as shipping address</span>
+                            </label>
+                        </div>
+                        <div id="billingFields" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Street Address *</label>
+                                <input type="text" name="billingStreet" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                                    <input type="text" name="billingCity" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">State/Province *</label>
+                                    <input type="text" name="billingState" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">ZIP/Postal Code *</label>
+                                    <input type="text" name="billingZip" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Country *</label>
+                                    <select name="billingCountry" required
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select Country</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="FR">France</option>
+                                        <option value="IT">Italy</option>
+                                        <option value="ES">Spain</option>
+                                        <option value="NL">Netherlands</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Method -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Payment Method</h2>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="paymentMethod" value="credit_card" required class="mr-3">
+                                <i class="fas fa-credit-card text-primary mr-2"></i>
+                                <span>Credit Card</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="paymentMethod" value="paypal" required class="mr-3">
+                                <i class="fab fa-paypal text-primary mr-2"></i>
+                                <span>PayPal</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="paymentMethod" value="cash_on_delivery" required class="mr-3">
+                                <i class="fas fa-money-bill-wave text-primary mr-2"></i>
+                                <span>Bank Paymenst</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Notes -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Notes (Optional)</h2>
+                        <textarea name="notes" rows="3" placeholder="Any special instructions for your order..."
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    </div>
+                    
+                    <!-- Place Order Button -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <button type="submit" class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg transition-colors text-lg">
+                            <i class="fas fa-lock mr-2"></i>
+                            Place Order
+                        </button>
+                        <p class="text-sm text-gray-600 text-center mt-3">
+                            Your order information is secure and encrypted
+                        </p>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
+                    
+                    <!-- Cart Items -->
+                    <div class="space-y-4 mb-6">
+                        <% cart.forEach(item => { %>
+                        <div class="flex items-center space-x-3">
+                            <img src="/images/<%= item.image %>" alt="<%= item.name %>" class="w-12 h-12 object-cover rounded">
+                            <div class="flex-1">
+                                <h4 class="text-sm font-medium text-gray-900"><%= item.name %></h4>
+                                <p class="text-xs text-gray-600">
+                                    <% if (item.size) { %>Size: <%= item.size %><% } %>
+                                    <% if (item.color) { %> • Color: <%= item.color %><% } %>
+                                </p>
+                                <p class="text-xs text-gray-600">Qty: <%= item.quantity %></p>
+                            </div>
+                            <!-- <span class="text-sm font-medium">$<%= (item.price * item.quantity).toFixed(2) %></span> -->
+                        </div>
+                        <% }) %>
+                    </div>
+                    
+                    <!-- Order Totals -->
+                    <div class="space-y-3 border-t border-gray-200 pt-4">
+                        <!-- <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Subtotal</span>
+                            <span class="font-medium">$<%= subtotal %></span>
+                        </div>
+                        
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Shipping</span>
+                            <span class="font-medium">
+                                <% if (parseFloat(shipping) === 0) { %>
+                                    <span class="text-green-600">FREE</span>
+                                <% } else { %>
+                                    $<%= shipping %>
+                                <% } %>
+                            </span>
+                        </div>
+                        
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Tax</span>
+                            <span class="font-medium">$<%= tax %></span>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-3">
+                            <div class="flex justify-between text-lg font-semibold">
+                                <span>Total</span>
+                                <span class="text-primary">$<%= total %></span>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Same as shipping address functionality
+    document.getElementById('sameAsShipping').addEventListener('change', function() {
+        const billingFields = document.getElementById('billingFields');
+        const billingInputs = billingFields.querySelectorAll('input, select');
+        
+        if (this.checked) {
+            // Copy shipping values to billing fields
+            document.querySelector('[name="billingStreet"]').value = document.querySelector('[name="shippingStreet"]').value;
+            document.querySelector('[name="billingCity"]').value = document.querySelector('[name="shippingCity"]').value;
+            document.querySelector('[name="billingState"]').value = document.querySelector('[name="shippingState"]').value;
+            document.querySelector('[name="billingZip"]').value = document.querySelector('[name="shippingZip"]').value;
+            document.querySelector('[name="billingCountry"]').value = document.querySelector('[name="shippingCountry"]').value;
+            
+            // Disable billing fields
+            billingInputs.forEach(input => {
+                input.disabled = true;
+                input.style.backgroundColor = '#f3f4f6';
+            });
+        } else {
+            // Enable billing fields
+            billingInputs.forEach(input => {
+                input.disabled = false;
+                input.style.backgroundColor = '';
+            });
+        }
+    });
+    
+    // Auto-copy shipping to billing when shipping fields change (if checkbox is checked)
+    const shippingInputs = ['shippingStreet', 'shippingCity', 'shippingState', 'shippingZip', 'shippingCountry'];
+    shippingInputs.forEach(fieldName => {
+        const shippingField = document.querySelector(`[name="${fieldName}"]`);
+        if (shippingField) {
+            shippingField.addEventListener('input', function() {
+                if (document.getElementById('sameAsShipping').checked) {
+                    const billingFieldName = fieldName.replace('shipping', 'billing');
+                    const billingField = document.querySelector(`[name="${billingFieldName}"]`);
+                    if (billingField) {
+                        billingField.value = this.value;
+                    }
+                }
+            });
+        }
+    });
+    
+    // Handle form submission to ensure billing fields are enabled before submit
+    document.querySelector('form').addEventListener('submit', function() {
+        if (document.getElementById('sameAsShipping').checked) {
+            // Temporarily enable billing fields for form submission
+            const billingInputs = document.getElementById('billingFields').querySelectorAll('input, select');
+            billingInputs.forEach(input => {
+                input.disabled = false;
+            });
+        }
+    });
+</script>
+
+<%- include('partials/footer') %>
+
